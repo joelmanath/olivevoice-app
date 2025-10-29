@@ -14,14 +14,19 @@ export default function Home() {
     setLoading(true);
     setResponse("");
 
-    const res = await fetch("/api/generate", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ input }),
-    });
+    try {
+      const res = await fetch("/api/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ input }),
+      });
 
-    const data = await res.json();
-    setResponse(data.response || "No response from AI");
+      const data = await res.json();
+      setResponse(data.response || "No response from AI");
+    } catch (err) {
+      setResponse("Error connecting to OliveVoice API.");
+    }
+
     setLoading(false);
   };
 
@@ -42,9 +47,13 @@ export default function Home() {
         <h1 className="text-3xl font-bold text-center text-gray-800 mb-4">
           OliveVoice 🌿
         </h1>
-        <p className="text-center text-gray-500 mb-6">
-          To help church members share their testimonies with humility and under the inspiration of the Holy Spirit, reflecting the faith and holiness upheld in TPM.
-          \n Share your testimony below and OliveVoice will help refine it.
+
+        <p className="text-center text-gray-600 mb-6">
+          We’re here to help you share your testimony with <strong>humility</strong> and under the inspiration of the Holy Spirit, reflecting the faith and holiness upheld in TPM.
+          <br />
+          <span className="text-green-700 font-medium">
+            Even if you feel hesitant, just write what’s in your heart — OliveVoice will help refine it with clarity and grace.
+          </span>
         </p>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-3">
@@ -80,7 +89,9 @@ export default function Home() {
             className="mt-6 p-4 border rounded-lg bg-green-50 relative"
           >
             <h2 className="font-bold text-green-800 mb-2">OliveVoice Suggestion</h2>
-            <p className="text-gray-700 whitespace-pre-line">{response}</p>
+            <p className="text-gray-700 whitespace-pre-line">
+              {response.match(/"(.*?)"/)?.[1] || response}
+            </p>
 
             <button
               onClick={copyToClipboard}
