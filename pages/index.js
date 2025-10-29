@@ -101,7 +101,7 @@ export default function Home() {
               Copy 📋
             </button>
 
-            <h2 className="font-bold text-green-800 mb-2">Here is your refined testimony:</h2>
+            <h4 className="font-bold text-green-800 mb-2">Here is your refined testimony:</h4>
             <p className="text-gray-700 whitespace-pre-line">
               {response.match(/"(.*?)"/)?.[1] || response}
             </p>
