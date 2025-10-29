@@ -30,6 +30,7 @@ export default function Home() {
     setLoading(false);
   };
 
+  // Smooth scroll to bottom whenever response changes
   useEffect(() => {
     if (responseRef.current && response) {
       responseRef.current.scrollTo({
@@ -65,23 +66,20 @@ export default function Home() {
             onChange={(e) => setInput(e.target.value)}
             placeholder="Write your testimony here..."
             rows="15"
-            className="p-4 border rounded-lg text-gray-800 text-lg focus:outline-none focus:ring focus:ring-green-300
-                       w-[calc(100vw-2rem)] md:w-full"
+            className="p-4 border rounded-lg text-gray-800 text-lg focus:outline-none focus:ring focus:ring-green-300 w-full max-w-[90vw]"
           />
 
-          <div className="mt-3 w-full md:w-auto">
-            <button
-              type="submit"
-              disabled={loading}
-              className={`py-3 px-6 rounded-lg text-white font-semibold transition-all w-full md:w-auto ${
-                loading
-                  ? "bg-green-300 cursor-not-allowed"
-                  : "bg-green-600 hover:bg-green-700"
-              }`}
-            >
-              {loading ? "Refining your testimony… ✨" : "Refine with OliveVoice"}
-            </button>
-          </div>
+          <button
+            type="submit"
+            disabled={loading}
+            className={`py-3 px-6 rounded-lg text-white font-semibold transition-all w-full md:w-auto ${
+              loading
+                ? "bg-green-300 cursor-not-allowed"
+                : "bg-green-600 hover:bg-green-700"
+            }`}
+          >
+            {loading ? "Refining your testimony… ✨" : "Refine with OliveVoice"}
+          </button>
         </form>
 
         {loading && (
@@ -96,6 +94,7 @@ export default function Home() {
             className="mt-6 p-4 border rounded-lg bg-green-50 relative overflow-auto max-h-[400px]"
           >
             <h4 className="font-bold text-green-800 mb-2">Here is your refined testimony:</h4>
+
             <p className="text-gray-700 whitespace-pre-line">
               {response.match(/"(.*?)"/)?.[1] || response}
             </p>
