@@ -64,19 +64,20 @@ export default function Home() {
             rows="15"
             className="p-4 border rounded-lg w-full focus:outline-none focus:ring focus:ring-green-300 text-gray-800 text-lg"
           />
-
+  
           <button
             type="submit"
             disabled={loading}
-            className={`py-3 px-6 rounded-lg text-white font-semibold transition-all mt-2 self-start ${
-              loading
-                ? "bg-green-300 cursor-not-allowed"
-                : "bg-green-600 hover:bg-green-700"
+            className={`py-3 px-6 rounded-lg text-white font-semibold transition-all w-full md:w-auto ${
+            loading
+            ? "bg-green-300 cursor-not-allowed"
+            : "bg-green-600 hover:bg-green-700"
             }`}
-          >
+            >
             {loading ? "Refining your testimony… ✨" : "Refine with OliveVoice"}
           </button>
         </form>
+
 
         {loading && (
           <div className="flex justify-center items-center mt-4">
