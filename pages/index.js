@@ -50,7 +50,7 @@ export default function Home() {
 
         <p className="text-center text-gray-600 mb-6">
           We’re here to help you share your testimony with humility and under the inspiration of the Holy Spirit, reflecting the Pentecostal faith and holiness.
-          <br />
+          <br /><br />
           <span className="text-green-700 font-medium">
             Even if you feel hesitant, just write what’s in your heart — OliveVoice will help refine it with clarity and grace.
           </span>
@@ -61,13 +61,14 @@ export default function Home() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Write your testimony here..."
-            rows="6"
+            rows="15"
             className="p-4 border rounded-lg w-full focus:outline-none focus:ring focus:ring-green-300 text-gray-800 text-lg"
           />
+
           <button
             type="submit"
             disabled={loading}
-            className={`py-3 px-6 rounded-lg text-white font-semibold transition-all ${
+            className={`py-3 px-6 rounded-lg text-white font-semibold transition-all mt-2 self-start ${
               loading
                 ? "bg-green-300 cursor-not-allowed"
                 : "bg-green-600 hover:bg-green-700"
@@ -95,7 +96,7 @@ export default function Home() {
 
             <button
               onClick={copyToClipboard}
-              className="absolute top-2 right-2 text-sm text-green-600 hover:text-green-800"
+              className="absolute top-2 right-2 py-1 px-3 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-medium"
             >
               Copy 📋
             </button>
