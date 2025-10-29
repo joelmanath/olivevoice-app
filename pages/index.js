@@ -43,7 +43,8 @@ export default function Home() {
           OliveVoice 🌿
         </h1>
         <p className="text-center text-gray-500 mb-6">
-          Share your testimony — let the Spirit inspire your words.
+          To help church members share their testimonies with humility and under the inspiration of the Holy Spirit, reflecting the faith and holiness upheld in TPM.
+          \n Share your testimony below and OliveVoice will help refine it.
         </p>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-3">
