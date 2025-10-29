@@ -14,6 +14,7 @@ export default async function handler(req, res) {
 
   try {
     const { input } = req.body;
+    console.log("📩 Received input:", input);
 
     if (!input) {
       return res.status(400).json({ error: "Missing input" });
@@ -34,20 +35,27 @@ export default async function handler(req, res) {
       ],
     });
 
-    const output = completion.choices[0]?.message?.content || "No response from AI";
+    console.log("🧠 Raw completion response:", JSON.stringify(completion, null, 2));
+
+    const output =
+      completion?.choices?.[0]?.message?.content?.trim() ||
+      "⚠️ No response text in completion";
+
+    console.log("✅ Final output to send:", output);
+
     return res.status(200).json({ response: output });
   } catch (error) {
-  console.error("API error full:", error);
+    console.error("❌ API error full:", error);
 
-  if (error.code === "insufficient_quota") {
-    return res.status(429).json({
-      error: "OliveVoice is currently at its usage limit. Please try again later.",
+    if (error.code === "insufficient_quota") {
+      return res.status(429).json({
+        error:
+          "OliveVoice is currently at its usage limit. Please try again later.",
+      });
+    }
+
+    return res.status(500).json({
+      error: error.message || "Unknown error",
     });
   }
-
-  return res.status(500).json({
-    error: error.message || "Unknown error",
-  });
-}
-
 }
