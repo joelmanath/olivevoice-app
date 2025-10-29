@@ -1,3 +1,4 @@
+// pages/api/generate.js
 import OpenAI from "openai";
 
 const client = new OpenAI({
@@ -9,20 +10,32 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { testimony } = req.body;
-
   try {
+    const { input } = req.body;
+
+    if (!input) {
+      return res.status(400).json({ error: "Missing input" });
+    }
+
     const completion = await client.chat.completions.create({
       model: "gpt-4o-mini",
       messages: [
-        { role: "system", content: "You are a helpful assistant summarizing Christian testimonies in an inspiring way." },
-        { role: "user", content: `Summarize this testimony faithfully and warmly:\n${testimony}` },
+        {
+          role: "system",
+          content:
+            "You are OliveVoice — a writing assistant that helps TPM believers share their testimonies with humility and grace, inspired by the Holy Spirit.",
+        },
+        {
+          role: "user",
+          content: input,
+        },
       ],
     });
 
-    res.status(200).json({ summary: completion.choices[0].message.content });
+    const output = completion.choices[0]?.message?.content || "No response from AI";
+    return res.status(200).json({ response: output });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Error generating summary" });
+    console.error("API error:", error);
+    return res.status(500).json({ error: error.message || "Unknown error" });
   }
 }
