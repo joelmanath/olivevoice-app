@@ -5,15 +5,28 @@ export default function Home() {
   const [response, setResponse] = useState("");
 
   const handleSubmit = async (testimony) => {
-    setResponse("Generating summary...");
+  setResponse("Generating summary...");
+
+  try {
     const res = await fetch("/api/generate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ input: "Your testimony prompt here" }),
+      body: JSON.stringify({ input: testimony || "Your testimony prompt here" }),
     });
+
+    if (!res.ok) {
+      const errorData = await res.json();
+      setResponse(`Error: ${errorData.error || res.statusText}`);
+      return;
+    }
+
     const data = await res.json();
-    setResponse(data.summary || "No response");
-  };
+    setResponse(data.summary || "No response from API");
+  } catch (err) {
+    console.error("Client error:", err);
+    setResponse(`Client error: ${err.message}`);
+  }
+};
 
   return (
     <main style={{ padding: "2rem", maxWidth: "600px", margin: "0 auto" }}>
