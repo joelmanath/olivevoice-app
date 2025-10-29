@@ -37,7 +37,17 @@ export default async function handler(req, res) {
     const output = completion.choices[0]?.message?.content || "No response from AI";
     return res.status(200).json({ response: output });
   } catch (error) {
-    console.error("API error:", error);
-    return res.status(500).json({ error: error.message || "Unknown error" });
+  console.error("API error full:", error);
+
+  if (error.code === "insufficient_quota") {
+    return res.status(429).json({
+      error: "OliveVoice is currently at its usage limit. Please try again later.",
+    });
   }
+
+  return res.status(500).json({
+    error: error.message || "Unknown error",
+  });
+}
+
 }
