@@ -30,7 +30,7 @@ export default function Home() {
     setLoading(false);
   };
 
-  // Smooth scroll to bottom whenever response changes
+  // Scroll into view when response updates
   useEffect(() => {
     if (responseRef.current && response) {
       responseRef.current.scrollTo({
@@ -66,23 +66,21 @@ export default function Home() {
             onChange={(e) => setInput(e.target.value)}
             placeholder="Write your testimony here..."
             rows="15"
-            className="p-4 border rounded-lg w-full focus:outline-none focus:ring focus:ring-green-300 text-gray-800 text-lg"
+            className="p-4 border rounded-lg text-gray-800 text-lg focus:outline-none focus:ring focus:ring-green-300
+                       w-[calc(100vw-2rem)] md:w-full"
           />
 
-          {/* Refine button on its own line */}
-          <div className="flex justify-center mt-2">
-            <button
-              type="submit"
-              disabled={loading}
-              className={`py-3 px-6 rounded-lg text-white font-semibold transition-all w-full md:w-auto ${
-                loading
-                  ? "bg-green-300 cursor-not-allowed"
-                  : "bg-green-600 hover:bg-green-700"
-              }`}
-            >
-              {loading ? "Refining your testimony… ✨" : "Refine with OliveVoice"}
-            </button>
-          </div>
+          <button
+            type="submit"
+            disabled={loading}
+            className={`py-3 px-6 rounded-lg text-white font-semibold transition-all w-full md:w-auto ${
+              loading
+                ? "bg-green-300 cursor-not-allowed"
+                : "bg-green-600 hover:bg-green-700"
+            }`}
+          >
+            {loading ? "Refining your testimony… ✨" : "Refine with OliveVoice"}
+          </button>
         </form>
 
         {loading && (
@@ -96,28 +94,27 @@ export default function Home() {
             ref={responseRef}
             className="mt-6 p-4 border rounded-lg bg-green-50 relative overflow-auto max-h-[400px]"
           >
-            {/* Top-right copy button */}
+            <h4 className="font-bold text-green-800 mb-2">Here is your refined testimony:</h4>
+
+            {/* Top copy button below heading */}
             <button
               onClick={copyToClipboard}
-              className="absolute top-2 right-2 py-1 px-2 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm font-semibold"
+              className="mb-4 py-2 px-4 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm font-semibold float-right"
             >
               Copy 📋
             </button>
 
-            <h4 className="font-bold text-green-800 mb-2">Here is your refined testimony:</h4>
-            <p className="text-gray-700 whitespace-pre-line">
+            <p className="text-gray-700 whitespace-pre-line clear-right">
               {response.match(/"(.*?)"/)?.[1] || response}
             </p>
 
             {/* Bottom-left copy button */}
-            <div className="mt-4 flex justify-start">
-              <button
-                onClick={copyToClipboard}
-                className="py-2 px-4 bg-green-600 text-white rounded-lg hover:bg-green-700 font-semibold"
-              >
-                Copy 📋
-              </button>
-            </div>
+            <button
+              onClick={copyToClipboard}
+              className="mt-4 py-2 px-4 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm font-semibold"
+            >
+              Copy 📋
+            </button>
           </div>
         )}
       </div>
