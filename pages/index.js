@@ -52,11 +52,11 @@ export default function Home() {
         </h1>
 
         <p className="text-center text-gray-600 mb-6">
-          OliveVoice will help you share your testimony with humility and under the inspiration of the Holy Spirit, reflecting the Pentecostal style of faith and holiness.
+          We’re here to help you share your testimony with humility and under the inspiration of the Holy Spirit, reflecting the Pentecostal faith and holiness.
           <br />
           <br />
           <span className="text-green-700 font-medium">
-            Even if you feel hesitant, just write what’s in your heart. OliveVoice will refine it with clarity and grace.
+            Even if you feel hesitant, just write what’s in your heart — OliveVoice will help refine it with clarity and grace.
           </span>
         </p>
 
@@ -78,7 +78,7 @@ export default function Home() {
                 : "bg-green-600 hover:bg-green-700"
             }`}
           >
-            {loading ? "Refining your testimony… ✨" : "Submit"}
+            {loading ? "Refining your testimony… ✨" : "Refine with OliveVoice"}
           </button>
         </form>
 
@@ -101,11 +101,7 @@ export default function Home() {
 
             <button
               onClick={copyToClipboard}
-              className={`py-3 px-6 rounded-lg text-white font-semibold transition-all w-full md:w-auto ${
-              loading
-                ? "bg-green-300 cursor-not-allowed"
-                : "bg-green-600 hover:bg-green-700"
-            }`}
+              className="mt-4 py-2 px-4 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm font-semibold"
             >
               Copy 📋
             </button>
