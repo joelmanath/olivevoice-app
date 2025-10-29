@@ -43,13 +43,13 @@ export default function Home() {
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-6">
-      <div className="w-full max-w-2xl bg-white p-6 rounded-2xl shadow-lg">
+      <div className="w-full max-w-4xl bg-white p-6 rounded-2xl shadow-lg">
         <h1 className="text-3xl font-bold text-center text-gray-800 mb-4">
           OliveVoice 🌿
         </h1>
 
         <p className="text-center text-gray-600 mb-6">
-          We’re here to help you share your testimony with <strong>humility</strong> and under the inspiration of the Holy Spirit, reflecting the faith and holiness upheld in TPM.
+          We’re here to help you share your testimony with humility and under the inspiration of the Holy Spirit, reflecting the Pentecostal faith and holiness.
           <br />
           <span className="text-green-700 font-medium">
             Even if you feel hesitant, just write what’s in your heart — OliveVoice will help refine it with clarity and grace.
@@ -61,19 +61,19 @@ export default function Home() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Write your testimony here..."
-            rows="4"
-            className="p-3 border rounded-lg w-full focus:outline-none focus:ring focus:ring-green-300"
+            rows="6"
+            className="p-4 border rounded-lg w-full focus:outline-none focus:ring focus:ring-green-300 text-gray-800 text-lg"
           />
           <button
             type="submit"
             disabled={loading}
-            className={`py-2 px-4 rounded-lg text-white font-semibold transition-all ${
+            className={`py-3 px-6 rounded-lg text-white font-semibold transition-all ${
               loading
                 ? "bg-green-300 cursor-not-allowed"
                 : "bg-green-600 hover:bg-green-700"
             }`}
           >
-            {loading ? "Generating..." : "Refine with OliveVoice"}
+            {loading ? "Refining your testimony… ✨" : "Refine with OliveVoice"}
           </button>
         </form>
 
