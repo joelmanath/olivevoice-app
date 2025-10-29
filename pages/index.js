@@ -69,17 +69,20 @@ export default function Home() {
             className="p-4 border rounded-lg w-full focus:outline-none focus:ring focus:ring-green-300 text-gray-800 text-lg"
           />
 
-          <button
-            type="submit"
-            disabled={loading}
-            className={`py-3 px-6 rounded-lg text-white font-semibold transition-all w-full md:w-auto ${
-              loading
-                ? "bg-green-300 cursor-not-allowed"
-                : "bg-green-600 hover:bg-green-700"
-            }`}
-          >
-            {loading ? "Refining your testimony… ✨" : "Refine with OliveVoice"}
-          </button>
+          {/* Refine button on its own line */}
+          <div className="flex justify-center mt-2">
+            <button
+              type="submit"
+              disabled={loading}
+              className={`py-3 px-6 rounded-lg text-white font-semibold transition-all w-full md:w-auto ${
+                loading
+                  ? "bg-green-300 cursor-not-allowed"
+                  : "bg-green-600 hover:bg-green-700"
+              }`}
+            >
+              {loading ? "Refining your testimony… ✨" : "Refine with OliveVoice"}
+            </button>
+          </div>
         </form>
 
         {loading && (
@@ -93,7 +96,7 @@ export default function Home() {
             ref={responseRef}
             className="mt-6 p-4 border rounded-lg bg-green-50 relative overflow-auto max-h-[400px]"
           >
-            {/* Top-right copy */}
+            {/* Top-right copy button */}
             <button
               onClick={copyToClipboard}
               className="absolute top-2 right-2 py-1 px-2 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm font-semibold"
@@ -106,13 +109,15 @@ export default function Home() {
               {response.match(/"(.*?)"/)?.[1] || response}
             </p>
 
-            {/* Bottom-left copy */}
-            <button
-              onClick={copyToClipboard}
-              className="mt-4 py-2 px-4 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm font-semibold"
-            >
-              Copy 📋
-            </button>
+            {/* Bottom-left copy button */}
+            <div className="mt-4 flex justify-start">
+              <button
+                onClick={copyToClipboard}
+                className="py-2 px-4 bg-green-600 text-white rounded-lg hover:bg-green-700 font-semibold"
+              >
+                Copy 📋
+              </button>
+            </div>
           </div>
         )}
       </div>
