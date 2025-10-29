@@ -14,7 +14,6 @@ export default async function handler(req, res) {
 
   try {
     const { input } = req.body;
-    console.log("📩 Received input:", input);
 
     if (!input) {
       return res.status(400).json({ error: "Missing input" });
@@ -26,7 +25,7 @@ export default async function handler(req, res) {
         {
           role: "system",
           content:
-            "You are OliveVoice — a writing assistant that helps TPM believers share their testimonies with humility and grace, inspired by the Holy Spirit.",
+            "You are OliveVoice — a writing assistant that helps TPM believers share their testimonies with humility and grace, inspired by the Holy Spirit. When giving your response, include the improved testimony inside quotation marks on its own line.",
         },
         {
           role: "user",
@@ -35,22 +34,21 @@ export default async function handler(req, res) {
       ],
     });
 
-    console.log("🧠 Raw completion response:", JSON.stringify(completion, null, 2));
+    const fullText = completion.choices[0]?.message?.content || "No response from AI";
 
-    const output =
-      completion?.choices?.[0]?.message?.content?.trim() ||
-      "⚠️ No response text in completion";
+    // Extract only the text inside quotes if available
+    const match = fullText.match(/"([^"]+)"/s);
+    const extracted = match ? match[1] : fullText;
 
-    console.log("✅ Final output to send:", output);
+    console.log("✅ Final extracted output:", extracted);
 
-    return res.status(200).json({ response: output });
+    return res.status(200).json({ response: extracted });
   } catch (error) {
-    console.error("❌ API error full:", error);
+    console.error("API error full:", error);
 
     if (error.code === "insufficient_quota") {
       return res.status(429).json({
-        error:
-          "OliveVoice is currently at its usage limit. Please try again later.",
+        error: "OliveVoice is currently at its usage limit. Please try again later.",
       });
     }
 
