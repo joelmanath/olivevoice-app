@@ -9,7 +9,7 @@ export default function Home() {
     const res = await fetch("/api/generate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ testimony }),
+      body: JSON.stringify({ input: "Your testimony prompt here" }),
     });
     const data = await res.json();
     setResponse(data.summary || "No response");
