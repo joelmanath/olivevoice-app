@@ -30,7 +30,6 @@ export default function Home() {
     setLoading(false);
   };
 
-  // Scroll into view when response updates
   useEffect(() => {
     if (responseRef.current && response) {
       responseRef.current.scrollTo({
@@ -46,7 +45,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-6">
-      <div className="w-full max-w-4xl bg-white p-6 rounded-2xl shadow-lg">
+      <div className="w-full max-w-5xl bg-white p-6 rounded-2xl shadow-lg">
         <h1 className="text-3xl font-bold text-center text-gray-800 mb-4">
           OliveVoice 🌿
         </h1>
@@ -70,17 +69,19 @@ export default function Home() {
                        w-[calc(100vw-2rem)] md:w-full"
           />
 
-          <button
-            type="submit"
-            disabled={loading}
-            className={`py-3 px-6 rounded-lg text-white font-semibold transition-all w-full md:w-auto ${
-              loading
-                ? "bg-green-300 cursor-not-allowed"
-                : "bg-green-600 hover:bg-green-700"
-            }`}
-          >
-            {loading ? "Refining your testimony… ✨" : "Refine with OliveVoice"}
-          </button>
+          <div className="mt-3 w-full md:w-auto">
+            <button
+              type="submit"
+              disabled={loading}
+              className={`py-3 px-6 rounded-lg text-white font-semibold transition-all w-full md:w-auto ${
+                loading
+                  ? "bg-green-300 cursor-not-allowed"
+                  : "bg-green-600 hover:bg-green-700"
+              }`}
+            >
+              {loading ? "Refining your testimony… ✨" : "Refine with OliveVoice"}
+            </button>
+          </div>
         </form>
 
         {loading && (
@@ -95,20 +96,10 @@ export default function Home() {
             className="mt-6 p-4 border rounded-lg bg-green-50 relative overflow-auto max-h-[400px]"
           >
             <h4 className="font-bold text-green-800 mb-2">Here is your refined testimony:</h4>
-
-            {/* Top copy button below heading */}
-            <button
-              onClick={copyToClipboard}
-              className="mb-4 py-2 px-4 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm font-semibold float-right"
-            >
-              Copy 📋
-            </button>
-
-            <p className="text-gray-700 whitespace-pre-line clear-right">
+            <p className="text-gray-700 whitespace-pre-line">
               {response.match(/"(.*?)"/)?.[1] || response}
             </p>
 
-            {/* Bottom-left copy button */}
             <button
               onClick={copyToClipboard}
               className="mt-4 py-2 px-4 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm font-semibold"
