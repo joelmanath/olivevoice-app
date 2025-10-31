@@ -1,16 +1,17 @@
-// pages/index.js
-import { useState, useRef, useEffect } from "react";
+"use client";
+
+import { useState } from "react";
+import { motion } from "framer-motion";
+import TestimonyForm from "../components/TestimonyForm";
+import { Button } from "../components/ui/button";
+import { Clipboard } from "lucide-react";
 
 export default function Home() {
-  const [input, setInput] = useState("");
   const [response, setResponse] = useState("");
   const [loading, setLoading] = useState(false);
-  const responseRef = useRef(null);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleGenerate = async (input) => {
     if (!input.trim()) return;
-
     setLoading(true);
     setResponse("");
 
@@ -22,96 +23,69 @@ export default function Home() {
       });
 
       const data = await res.json();
-      setResponse(data.response || "No response from AI");
-    } catch (err) {
+      setResponse(data.response || "No response from OliveVoice");
+    } catch (error) {
       setResponse("Error connecting to OliveVoice API.");
     }
 
     setLoading(false);
   };
 
-  useEffect(() => {
-    if (responseRef.current && response) {
-      responseRef.current.scrollTo({
-        top: responseRef.current.scrollHeight,
-        behavior: "smooth",
-      });
-    }
-  }, [response]);
-
   const copyToClipboard = () => {
     navigator.clipboard.writeText(response);
   };
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-6">
-      <div className="w-full max-w-6xl bg-white p-6 rounded-2xl shadow-lg">
-        <h1 className="text-3xl font-bold text-center text-gray-800 mb-4">
-          OliveVoice 🌿
-        </h1>
+    <main className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-emerald-50 to-green-100 p-4 sm:p-6 md:p-10">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="w-full max-w-5xl flex flex-col md:flex-row gap-8"
+      >
+        {/* Left Column: Form */}
+        <motion.div
+          className="flex-1 backdrop-blur-xl bg-white/70 shadow-2xl rounded-2xl p-6 md:p-8"
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.1 }}
+        >
+          <h1 className="text-4xl sm:text-5xl font-bold text-emerald-700 mb-2">
+            OliveVoice 🌿
+          </h1>
+          <p className="text-gray-600 mb-6">
+            Share your testimony with humility and grace.
+          </p>
+          <TestimonyForm onSubmit={handleGenerate} loading={loading} />
+        </motion.div>
 
-        <p className="text-center text-gray-600 mb-6 leading-relaxed">
-          OliveVoice is here to help you share your testimony with humility and under the inspiration of the Holy Spirit, reflecting the Pentecostal way of faith and holiness.
-          <br />
-          <br />
-          <span className="text-green-700 font-medium">
-            Even if you feel hesitant, just write what’s in your heart. OliveVoice will help refine it with clarity and grace.
-          </span>
-        </p>
-
-        {/* FORM */}
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <div className="w-full">
-            <textarea
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Write your testimony here..."
-              rows="15"
-              className="block w-full p-4 border rounded-lg text-gray-800 text-lg focus:outline-none focus:ring-2 focus:ring-green-300 resize-y"
-            />
-          </div>
-
-          <div className="flex justify-end">
-            <button
-              type="submit"
-              disabled={loading}
-              className={`py-3 px-6 rounded-lg text-white font-semibold transition-all ${
-                loading
-                  ? "bg-green-300 cursor-not-allowed"
-                  : "bg-green-600 hover:bg-green-700"
-              }`}
+        {/* Right Column: Response */}
+        {response && (
+          <motion.div
+            className="flex-1 backdrop-blur-xl bg-white/60 shadow-xl rounded-2xl p-6 md:p-8 flex flex-col justify-between"
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            <p className="text-gray-800 whitespace-pre-line mb-4">{response}</p>
+            <Button
+              onClick={copyToClipboard}
+              className="bg-emerald-600 hover:bg-emerald-700 text-white self-end"
             >
-              {loading ? "Refining your testimony… ✨" : "Refine with OliveVoice"}
-            </button>
-          </div>
-        </form>
+              <Clipboard className="mr-2 h-4 w-4" /> Copy
+            </Button>
+          </motion.div>
+        )}
 
         {loading && (
-          <div className="flex justify-center items-center mt-6">
-            <div className="w-6 h-6 border-4 border-green-400 border-t-transparent rounded-full animate-spin"></div>
-          </div>
-        )}
-
-        {response && (
-          <div
-            ref={responseRef}
-            className="mt-6 p-4 border rounded-lg bg-green-50 relative overflow-auto max-h-[400px]"
+          <motion.div
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
           >
-            <h4 className="font-bold text-green-800 mb-2">Here is your testimony:</h4>
-
-            <p className="text-gray-700 whitespace-pre-line">
-              {response.match(/"(.*?)"/)?.[1] || response}
-            </p>
-
-            <button
-              onClick={copyToClipboard}
-              className="mt-4 py-2 px-4 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm font-semibold"
-            >
-              Copy 📋
-            </button>
-          </div>
+            <div className="w-12 h-12 border-4 border-emerald-400 border-t-transparent rounded-full animate-spin"></div>
+          </motion.div>
         )}
-      </div>
+      </motion.div>
     </main>
   );
 }

@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-neutral-50 text-neutral-700 transition-colors duration-300;
+}
+
+.dark body {
+  @apply bg-neutral-900 text-neutral-50;
+}
+
+textarea:focus,
+input:focus,
+button:focus {
+  @apply outline-none ring-2 ring-emerald-300;
+}

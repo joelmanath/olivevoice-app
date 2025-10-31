@@ -1,37 +1,46 @@
-import { useState } from "react";
+"use client";
 
-export default function TestimonyForm({ onSubmit }) {
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Sparkles } from "lucide-react";
+
+export default function TestimonyForm({ onSubmit, loading }) {
   const [testimony, setTestimony] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (testimony.trim() === "") return;
-    onSubmit(testimony);
+    if (!testimony.trim()) return;
+    await onSubmit(testimony);
     setTestimony("");
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ marginTop: "1rem" }}>
-      <textarea
-        rows="6"
-        style={{ width: "100%", padding: "0.5rem" }}
+    <motion.form
+      onSubmit={handleSubmit}
+      className="flex flex-col space-y-4"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+    >
+      <Textarea
+        rows={8}
         placeholder="Write your testimony here..."
         value={testimony}
         onChange={(e) => setTestimony(e.target.value)}
+        className="focus:ring-2 focus:ring-emerald-300 rounded-lg border border-gray-200 bg-white/50 backdrop-blur-sm"
       />
-      <button
-        type="submit"
-        style={{
-          marginTop: "0.5rem",
-          padding: "0.5rem 1rem",
-          background: "#006400",
-          color: "white",
-          border: "none",
-          borderRadius: "6px",
-        }}
-      >
-        Submit
-      </button>
-    </form>
+      <div className="flex justify-end">
+        <Button
+          type="submit"
+          disabled={loading}
+          className="bg-emerald-600 hover:bg-emerald-700 text-white flex items-center"
+        >
+          {loading ? "Refining..." : "Refine with OliveVoice"}
+          <Sparkles className="ml-2 h-4 w-4" />
+        </Button>
+      </div>
+    </motion.form>
   );
 }
