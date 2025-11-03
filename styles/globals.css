@@ -1,17 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
-  @apply bg-neutral-50 text-neutral-700 transition-colors duration-300;
+  @apply bg-gradient-to-br from-emerald-50 to-white text-neutral-700 font-sans min-h-screen flex items-center justify-center p-4;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .dark body {
   @apply bg-neutral-900 text-neutral-50;
 }
 
-textarea:focus,
-input:focus,
-button:focus {
-  @apply outline-none ring-2 ring-emerald-300;
+/* Card container styling */
+.card {
+  @apply bg-white shadow-card rounded-2xl p-8 max-w-lg w-full space-y-4 border border-neutral-100;
+}
+
+/* Headings */
+h1 {
+  @apply font-heading text-3xl font-semibold text-emerald-700 flex items-center gap-2;
+}
+
+/* Textarea */
+textarea {
+  @apply w-full p-3 rounded-lg border border-neutral-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 resize-none;
+}
+
+/* Button */
+button {
+  @apply px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-medium shadow-card transition-all duration-300;
 }
