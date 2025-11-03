@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   experimental: {
-    appDir: false,
+    // remove appDir — not needed for Next 14+
   },
 };
 

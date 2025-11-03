@@ -3,8 +3,10 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import TestimonyForm from "../components/TestimonyForm";
-import { Button } from "../components/ui/button";
 import { Clipboard } from "lucide-react";
+import { Button } from "../components/ui/button";
+import { Textarea } from "../components/ui/textarea";
+
 
 export default function Home() {
   const [response, setResponse] = useState("");
