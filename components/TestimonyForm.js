@@ -3,8 +3,9 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
-import { Button } from "../components/ui/button";
-import { Textarea } from "../components/ui/textarea";
+import { Button } from "./ui/button";
+import { Textarea } from "./ui/textarea";
+
 
 export default function TestimonyForm({ onSubmit, loading }) {
   const [testimony, setTestimony] = useState("");

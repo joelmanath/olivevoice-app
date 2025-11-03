@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import TestimonyForm from "../components/TestimonyForm";
 import { Clipboard } from "lucide-react";
+import TestimonyForm from "../components/TestimonyForm";
 import { Button } from "../components/ui/button";
-import { Textarea } from "../components/ui/textarea";
+
 
 
 export default function Home() {
